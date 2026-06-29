@@ -1,5 +1,8 @@
 name: Daily Gold Report
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "30 13 * * *"
@@ -35,7 +38,6 @@ jobs:
 
         run: |
           python main.py
-
 
       - name: Save updated history
         run: |
