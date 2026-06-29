@@ -13,7 +13,6 @@ __pycache__/
 
 # Generated files
 graphs/
-data/history.csv
 
 # OS files
 .DS_Store
