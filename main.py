@@ -2,6 +2,7 @@ from scraper import get_gold_rate
 from history import save_rate
 from graph import generate_graph
 from stats import get_stats
+from email_sender import send_email
 
 
 def main():
@@ -12,6 +13,8 @@ def main():
     generate_graph()
 
     stats = get_stats()
+
+    send_email(stats)
 
     print("\nDaily Report\n")
 
