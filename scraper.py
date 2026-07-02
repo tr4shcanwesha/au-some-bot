@@ -5,7 +5,11 @@ from datetime import date
 URL = "https://www.goodreturns.in/gold-rates/hyderabad.html"
 
 headers = {
-    "User-Agent": "Mozilla/5.0"
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/137.0.0.0 Safari/537.36"
+    )
 }
 
 
@@ -15,19 +19,18 @@ def get_gold_rate():
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    label = soup.find(
-        "span",
-        class_="label",
-        string=lambda s: s and "22k Gold" in s
-    )
+    # Find the 22K gold price
+    price = soup.find("span", id="22k-price")
 
-    value = label.find_next("span", class_="value").text.strip()
+    if price is None:
+        raise Exception(
+            "Couldn't find the 22K gold price. The website structure may have changed."
+        )
 
     value = (
-        value.replace("₹", "")
-             .replace("/gm", "")
-             .replace(",", "")
-             .strip()
+        price.text.strip()
+        .replace("₹", "")
+        .replace(",", "")
     )
 
     return {
@@ -38,5 +41,4 @@ def get_gold_rate():
 
 if __name__ == "__main__":
     data = get_gold_rate()
-
     print(data)
